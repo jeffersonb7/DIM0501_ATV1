@@ -1,56 +1,55 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-class D {
-    String t;
-    String c;
+class Noticia {
+    String texto;
+    String classificacao;
 }
 
 public class Sistema {
 
-    static ArrayList<D> data = new ArrayList<>();
+    static ArrayList<Noticia> listaNoticias = new ArrayList<>();
 
-    // função que faz tudo
-    public static void f(String a, String b) {
-        // adiciona coisa
-        if (a != null && !a.equals("")) {
-            D d = new D();
-            d.t = a;
-
-            if (b == null || b.equals("")) {
-                d.c = "duvidosa";
-            } else {
-                d.c = b;
-            }
-
-            data.add(d);
-        } else {
+    public static void adicionarNoticia(String texto, String classificacao) {
+        // TODO: extrair validação para outra função
+        if (texto == null || texto.isEmpty()) {
             System.out.println("erro");
+            return;
         }
+
+        Noticia noticia = new Noticia();
+        noticia.texto = texto;
+
+        if (classificacao == null || classificacao.isEmpty()) {
+            noticia.classificacao = "duvidosa";
+        } else {
+            // Possível fonte de bugs pois não garante enquadramento da classificação
+            noticia.classificacao = classificacao;
+        }
+
+        listaNoticias.add(noticia);
     }
 
-    public static void func2() {
-        // lista tudo
-        for (int i = 0; i < data.size(); i++) {
-            System.out.println("Texto: " + data.get(i).t);
-            System.out.println("Classificacao: " + data.get(i).c);
+    public static void listarNoticias() {
+        for (Noticia noticia : listaNoticias) {
+            System.out.println("Texto: " + noticia.texto);
+            System.out.println("Classificacao: " + noticia.classificacao);
             System.out.println("-------------------");
         }
     }
 
-    public static String analisar(String txt) {
+    public static String classificarNoticia(String textoNoticia) {
         int score = 0;
-
-        if (!txt.contains("FONTE")) {
+        if (!textoNoticia.contains("FONTE")) {
             score = score + 1;
         }
-        if (txt.contains("!!!")) {
+        if (textoNoticia.contains("!!!")) {
             score = score + 1;
         }
-        if (txt.contains("URGENTE")) {
+        if (textoNoticia.contains("URGENTE")) {
             score = score + 1;
         }
-        if (txt.length() < 10) {
+        if (textoNoticia.length() < 10) {
             score = score + 1;
         }
 
@@ -63,29 +62,29 @@ public class Sistema {
         }
     }
 
-    public static void addManual(Scanner sc) {
+    public static void adicionarNoticiaManualmente(Scanner sc) {
         System.out.print("Digite o texto: ");
-        String t = sc.nextLine();
+        String texto = sc.nextLine();
 
         System.out.print("Digite classificacao: ");
-        String c = sc.nextLine();
+        String classificacao = sc.nextLine();
 
-        if (c.equals("")) {
-            f(t, null);
+        if (classificacao.isEmpty()) {
+            adicionarNoticia(texto, null);
         } else {
-            f(t, c);
+            adicionarNoticia(texto, classificacao);
         }
     }
 
-    public static void addAuto(Scanner sc) {
+    public static void adicionarNoticiaAutomaticamente(Scanner sc) {
         System.out.print("Digite o texto: ");
-        String t = sc.nextLine();
+        String texto = sc.nextLine();
 
-        String c = analisar(t);
-        f(t, c);
+        String classificacao = classificarNoticia(texto);
+        adicionarNoticia(texto, classificacao);
     }
 
-    public static void menu() {
+    public static void exibirMenu() {
         Scanner sc = new Scanner(System.in);
 
         while (true) {
@@ -94,15 +93,15 @@ public class Sistema {
             System.out.println("3 - listar");
             System.out.println("4 - sair");
 
-            String op = sc.nextLine();
-
-            if (op.equals("1")) {
-                addManual(sc);
-            } else if (op.equals("2")) {
-                addAuto(sc);
-            } else if (op.equals("3")) {
-                func2();
-            } else if (op.equals("4")) {
+            String operacao = sc.nextLine();
+            
+            if (operacao.equals("1")) {
+                adicionarNoticiaManualmente(sc);
+            } else if (operacao.equals("2")) {
+                adicionarNoticiaAutomaticamente(sc);
+            } else if (operacao.equals("3")) {
+                listarNoticias();
+            } else if (operacao.equals("4")) {
                 break;
             } else {
                 System.out.println("errado");
@@ -112,8 +111,7 @@ public class Sistema {
         sc.close();
     }
 
-    // inicia programa
     public static void main(String[] args) {
-        menu();
+        exibirMenu();
     }
 }
