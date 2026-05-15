@@ -13,7 +13,7 @@
 
 ## 2. Validações Implementadas
 
-### 2.1 Validação de String Genérica — `validarString()`
+### 2.1 Validação de String Genérica - `validarString()`
 
 **Onde:** `SistemaDeNoticias.java`
 
@@ -27,14 +27,14 @@ Usada internamente para verificar texto e classificação antes de qualquer proc
 
 ---
 
-### 2.2 Validação do Texto da Notícia — `adicionarNoticia()`
+### 2.2 Validação do Texto da Notícia - `adicionarNoticia()`
 
 **Onde:** `SistemaDeNoticias.java`
 
-**Antes:** sem validação — a notícia era adicionada mesmo com texto vazio.
+**Antes:** sem validação - a notícia era adicionada mesmo com texto vazio.
 
 ```java
-// antigo.java — sem verificação de texto vazio
+// antigo.java - sem verificação de texto vazio
 if (a != null && !a.equals("")) {
     // ...
 } else {
@@ -55,11 +55,11 @@ public void adicionarNoticia(String texto, String classificacao) {
 
 ---
 
-### 2.3 Validação de Classificação — `converterClassificacao()`
+### 2.3 Validação de Classificação - `converterClassificacao()`
 
 **Onde:** `SistemaDeNoticias.java`
 
-**Antes:** não havia conversão tipada — qualquer string era aceita como classificação.
+**Antes:** não havia conversão tipada - qualquer string era aceita como classificação.
 
 **Depois:** tenta converter para o enum e lança exceção se o valor for inválido.
 
@@ -77,7 +77,7 @@ private Classificacao converterClassificacao(String valor) {
 
 ---
 
-### 2.4 Validação de Nulo na Análise de Risco — `calcularPontuacaoDeRisco()`
+### 2.4 Validação de Nulo na Análise de Risco - `calcularPontuacaoDeRisco()`
 
 **Onde:** `SistemaDeNoticias.java`
 
@@ -96,7 +96,7 @@ private int calcularPontuacaoDeRisco(String texto) {
 
 ---
 
-### 2.5 Captura de Exceção na Interface — `adicionarNoticiaManualmente()`
+### 2.5 Catch de Exceção na Interface - `adicionarNoticiaManualmente()`
 
 **Onde:** `Sistema.java`
 
@@ -114,11 +114,11 @@ try {
 
 ---
 
-### 2.6 Verificação de Lista Vazia — `listarNoticias()`
+### 2.6 Verificação de Lista Vazia - `listarNoticias()`
 
 **Onde:** `SistemaDeNoticias.java`
 
-**Antes:** listar sem noticias não exibia nada — comportamento silencioso e confuso.
+**Antes:** listar sem noticias não exibia nada - comportamento silencioso e confuso.
 
 **Depois:**
 
@@ -133,7 +133,7 @@ if (listaNoticias.isEmpty()) {
 
 ### 2.7 Classificação Padrão para Entrada Vazia
 
-**Onde:** `SistemaDeNoticias.java` — `adicionarNoticia()`
+**Onde:** `SistemaDeNoticias.java` - `adicionarNoticia()`
 
 Quando o usuário não informa classificação, o sistema assume `DUVIDOSA` como padrão (comportamento preservado do original, agora explícito via enum).
 
@@ -142,16 +142,3 @@ if (!validarString(classificacao)) {
     classificacaoFinal = Classificacao.DUVIDOSA;
 }
 ```
-
----
-
-## 3. Resumo das Validações
-
-| Validação | Onde | Tipo |
-|-----------|------|------|
-| Texto nulo ou vazio | `adicionarNoticia()` | Exceção com mensagem |
-| Classificação inválida | `converterClassificacao()` | Exceção com mensagem |
-| Texto nulo antes de `contains()` | `calcularPontuacaoDeRisco()` | Exceção com mensagem |
-| Lista vazia ao listar | `listarNoticias()` | Mensagem informativa |
-| Entrada vazia de classificação | `adicionarNoticia()` | Padrão `DUVIDOSA` |
-| Exceção na interface | `adicionarNoticiaManualmente()` | Captura + exibe mensagem |

@@ -17,7 +17,7 @@
 | Variável local | `op` | `operacao` | Elimina abreviação |
 | Variável local | `t` (em `addManual`) | `texto` | Sem ambiguidade |
 | Variável local | `c` (em `addManual`) | `classificacao` | Sem ambiguidade |
-| Tipo novo | — | `enum Classificacao` | Substitui magic strings por tipo seguro |
+| Tipo novo | - | `enum Classificacao` | Substitui magic strings por tipo seguro |
 
 ---
 

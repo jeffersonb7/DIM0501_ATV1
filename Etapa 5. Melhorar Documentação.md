@@ -20,11 +20,11 @@ Além disso, o código original não possuía nenhuma documentação formal (Jav
 Todos os comentários redundantes ou vagos foram removidos. Após a refatoração de nomes (Etapa 2), o próprio código passou a se documentar:
 
 ```java
-// Antes — comentário necessário para compensar nome ruim
+// Antes - comentário necessário para compensar nome ruim
 // lista tudo
 public static void func2() { ... }
 
-// Depois — nome explícito, comentário desnecessário
+// Depois - nome explícito, comentário desnecessário
 public void listarNoticias() { ... }
 ```
 
@@ -32,10 +32,7 @@ public void listarNoticias() { ... }
 
 JavaDoc foi adicionado a todas as classes e métodos relevantes nos quatro arquivos do projeto.
 
-**Critérios aplicados:**
-- Classes públicas: descrição do papel no sistema
-- Métodos públicos: `@param`, `@return` e `@throws` quando aplicável
-- Métodos privados não-triviais: comentário de uma linha descrevendo o `porquê` ou a invariante
+A documentação foi inserida em classes públicas, descrevendo seu papel no sistema, em métodos públicos, usando os padrões JavaDoc (`@param`, `@return` e `@throws`) e excepcionalmente em métodos privados com comportamento não-trivial.
 
 **Exemplos aplicados:**
 
@@ -65,20 +62,4 @@ public void adicionarNoticia(String texto, String classificacao) { ... }
 
 ## 3. Arquivo README.md
 
-Foi criado o arquivo `README.md` na raiz do projeto com:
-- Descrição do sistema
-- Instruções de compilação e execução
-- Estrutura do projeto e papel de cada arquivo
-
----
-
-## 4. Resumo das Mudanças de Documentação
-
-| Ação | Quantidade |
-|------|-----------|
-| Comentários inúteis removidos | 4 |
-| Classes com JavaDoc adicionado | 4 (`Classificacao`, `Noticia`, `SistemaDeNoticias`, `Sistema`) |
-| Métodos públicos documentados com JavaDoc | 8 |
-| Métodos privados com comentário de linha | 4 |
-| Constantes documentadas | 1 (`LIMITE_TEXTO_CURTO`) |
-| Arquivo README criado | 1 |
+Foi criado o arquivo `README.md` no diretório raiz do projeto com uma descrição simples do sistema, instruções de compilação e execução e a estrutura do projeto e papel de cada arquivo.

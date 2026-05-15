@@ -101,7 +101,7 @@ public class SistemaDeNoticias {
         }
         for (Noticia noticia : listaNoticias) {
             System.out.println(noticia);
-            System.out.println("\n--------------------");
+            System.out.println("--------------------");
         }
     }
 }

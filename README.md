@@ -22,10 +22,10 @@ java Sistema
 
 ```
 projeto/
-├── Classificacao.java      — Enum com os níveis de credibilidade (CONFIAVEL, DUVIDOSA, FALSA)
-├── Noticia.java            — Modelo de dados de uma notícia
-├── SistemaDeNoticias.java  — Lógica de negócio: classificação, cadastro e listagem
-└── Sistema.java            — Interface de linha de comando e ponto de entrada (main)
+├── Classificacao.java      - Enum com os níveis de credibilidade (CONFIAVEL, DUVIDOSA, FALSA)
+├── Noticia.java            - Modelo de dados de uma notícia
+├── SistemaDeNoticias.java  - Lógica de negócio: classificação, cadastro e listagem
+└── Sistema.java            - Interface de linha de comando e ponto de entrada (main)
 ```
 
 ## Funcionalidades

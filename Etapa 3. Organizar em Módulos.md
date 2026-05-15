@@ -19,17 +19,17 @@ Após a Etapa 2, o `Sistema.java` refatorado agrupou enum, modelo e toda a lógi
 
 ```
 projeto/
-├── Classificacao.java      ← enum (suporte ao modelo)
-├── Noticia.java            ← modelo (dados + toString)
+├── Classificacao.java      ← enum (auxílio ao modelo)
+├── Noticia.java            ← modelo (dados e representação)
 ├── SistemaDeNoticias.java  ← serviço (lógica de negócio)
-└── Sistema.java            ← interface/menu + main
+└── Sistema.java            ← interface/menu e main
 ```
 
 ---
 
 ## 3. Responsabilidade de Cada Módulo
 
-### `Classificacao.java` — Enum de Domínio
+### `Classificacao.java` - Enum para Restrição de Domínio
 Centraliza os valores válidos de credibilidade, eliminando o uso de strings literais no restante do código.
 
 ```java
@@ -40,7 +40,7 @@ public enum Classificacao {
 
 ---
 
-### `Noticia.java` — Modelo
+### `Noticia.java` - Modelo
 Encapsula os dados de uma notícia. Não contém lógica de negócio.
 
 ```java
@@ -53,7 +53,7 @@ public class Noticia {
 
 ---
 
-### `SistemaDeNoticias.java` — Serviço (Lógica de Negócio)
+### `SistemaDeNoticias.java` - Lógica de Negócio
 Contém toda a lógica de classificação, validação interna e gerenciamento da coleção. Não conhece `Scanner` nem exibe menus.
 
 Métodos públicos:
@@ -69,7 +69,7 @@ Métodos privados (auxiliares):
 
 ---
 
-### `Sistema.java` — Interface + Main
+### `Sistema.java` - Interface + Main
 Responsável exclusivamente pela interação com o usuário via terminal. Instancia `SistemaDeNoticias` e delega todas as operações a ele.
 
 Métodos públicos:
@@ -78,7 +78,7 @@ Métodos públicos:
 - `exibirMenu()`
 - `main(String[] args)`
 
-Métodos privados (auxiliares de I/O):
+Métodos privados (auxiliares):
 - `lerTexto()`
 - `lerClassificacao()`
 - `exibirOpcoes()`
@@ -88,9 +88,4 @@ Métodos privados (auxiliares de I/O):
 
 ## 4. Benefícios da Modularização
 
-| Benefício | Descrição |
-|-----------|-----------|
-| **Manutenção** | Alterar a lógica de classificação não afeta a interface e vice-versa |
-| **Legibilidade** | Cada arquivo tem escopo limitado e claro |
-| **Reutilização** | `SistemaDeNoticias` pode ser usado por outra interface (ex.: web, API) sem alteração |
-| **Testabilidade** | A lógica de negócio pode ser testada independentemente da entrada do usuário |
+A modularização facilita a manutenção, pois permite, por exemplo, alterar a lógica de classificação sem afetar a interface. Além disso, melhora a legibilidade ao limitar o escopo de cada arquivo e exigir menos contexto por parte do leitor. Também incentiva a reutilização (` SistemaDeNoticias` pode ser reaproveitado por outras interfaces sem modificações) e aumenta a testabilidade, pois permite que a lógica de negócio seja verificada independentemente da entrada do usuário, com casos de teste mais claros e fáceis de simular.

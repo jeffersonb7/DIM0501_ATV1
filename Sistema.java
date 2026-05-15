@@ -1,8 +1,8 @@
 import java.util.Scanner;
 
 /**
- * Interface de linha de comando do sistema de monitoramento de notícias.
- * Responsável pela interação com o usuário e pela delegação das operações
+ * CLI do sistema de monitoramento de notícias.
+ * Responsável pela interação com o usuário e pelo repasse de operações
  * à camada de serviço {@link SistemaDeNoticias}.
  */
 public class Sistema {
@@ -67,7 +67,7 @@ public class Sistema {
     }
 
     /**
-     * Exibe o menu principal e processa as operações até o usuário escolher sair.
+     * Exibe o menu principal e processa operações até que o usuário escolha sair.
      */
     public void exibirMenu() {
         boolean continuar = true;

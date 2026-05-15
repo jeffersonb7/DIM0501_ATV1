@@ -13,7 +13,7 @@
 ## 2. Nomes Inadequados
 
 | Linhas | Componente | Problema | Sugestão |
-|--------|-----------|----------|----------|
+|---|---|---|---|
 | 4-7 | Classe `D` | Completamente inexpressiva | `Postagem`, `Mensagem`, `Dado` |
 | 5-6 | Atributos `t`, `c` | Sem contexto | `texto`, `classificacao` |
 | 13-14 | Método `f()` | Sem significado | `adicionarDado()`, `adicionarPostagem()` |
@@ -55,12 +55,12 @@
 
 ---
 
-## 6. Code Smells Básicos
+## 6. Code Smells
 
 ### 6.1 Uso Excessivo de `static`
 | Linhas | Problema |
 |--------|----------|
-| 11 | `static ArrayList<D> data` — Mistura dados com lógica |
+| 11 | `static ArrayList<D> data` - Mistura dados com lógica |
 | 14, 32, 41, 66, 80, 88 | Métodos `static` sem encapsulamento |
 
 **Consequência**: Difícil de testar, impossível reutilizar em múltiplas instâncias
@@ -81,7 +81,7 @@
 ### 6.4 Magic Numbers
 | Linhas | Número | Problema |
 |--------|--------|----------|
-| 53 | `10` | `txt.length() < 10` — sem documentação |
+| 53 | `10` | `txt.length() < 10` - sem documentação |
 
 ---
 
