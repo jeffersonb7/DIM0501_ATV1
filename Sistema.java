@@ -1,89 +1,14 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
-enum Classificacao {
-    CONFIAVEL, DUVIDOSA, FALSA
-}
-
-class Noticia {
-    private String texto;
-    private Classificacao classificacao;
-
-    public Noticia(String texto, Classificacao classificacao) {
-        this.texto = texto;
-        this.classificacao = classificacao;
-    }
-
-    public String getTexto() {
-        return texto;
-    }
-
-    public Classificacao getClassificacao() {
-        return classificacao;
-    }
-
-    @Override
-    public String toString() {
-        return "Texto: " + texto + "\nClassificacao: " + classificacao;
-    }
-}
-
+/**
+ * Interface de linha de comando do sistema de monitoramento de notícias.
+ * Responsável pela interação com o usuário e pela delegação das operações
+ * à camada de serviço {@link SistemaDeNoticias}.
+ */
 public class Sistema {
 
-    private static final int LIMITE_TEXTO_CURTO = 10;
-
-    private ArrayList<Noticia> listaNoticias = new ArrayList<>();
+    private SistemaDeNoticias servico = new SistemaDeNoticias();
     private Scanner sc = new Scanner(System.in);
-
-    private boolean validarString(String texto) {
-        return texto != null && !texto.strip().isEmpty();
-    }
-
-    private Classificacao converterClassificacao(String valor) {
-        try {
-            return Classificacao.valueOf(valor.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(
-                "Classificação inválida. Use CONFIAVEL, DUVIDOSA ou FALSA."
-            );
-        }
-    }
-
-    private int calcularPontuacaoDeRisco(String texto) {
-        int pontuacao = 0;
-        if (!texto.contains("FONTE"))            pontuacao++;
-        if (texto.contains("!!!"))               pontuacao++;
-        if (texto.contains("URGENTE"))           pontuacao++;
-        if (texto.length() < LIMITE_TEXTO_CURTO) pontuacao++;
-        return pontuacao;
-    }
-
-    private Classificacao classificarPorPontuacao(int pontuacao) {
-        if (pontuacao == 0) return Classificacao.CONFIAVEL;
-        if (pontuacao == 1) return Classificacao.DUVIDOSA;
-        return Classificacao.FALSA;
-    }
-
-    public Classificacao classificarNoticia(String textoNoticia) {
-        int pontuacao = calcularPontuacaoDeRisco(textoNoticia);
-        return classificarPorPontuacao(pontuacao);
-    }
-
-    public void adicionarNoticia(String texto, String classificacao) {
-        if (!validarString(texto)) {
-            throw new IllegalArgumentException("Texto da notícia inválido.");
-        }
-
-        Classificacao classificacaoFinal;
-
-        if (!validarString(classificacao)) {
-            classificacaoFinal = Classificacao.DUVIDOSA;
-        } else {
-            classificacaoFinal = converterClassificacao(classificacao);
-        }
-
-        listaNoticias.add(new Noticia(texto, classificacaoFinal));
-    }
 
     private String lerTexto() {
         System.out.print("Digite o texto: ");
@@ -95,32 +20,28 @@ public class Sistema {
         return sc.nextLine();
     }
 
-    public void adicionarNoticiaManualmente(Scanner sc) {
+    /**
+     * Solicita texto e classificação ao usuário e adiciona a notícia manualmente.
+     * Exibe mensagem de erro caso a entrada seja inválida.
+     */
+    public void adicionarNoticiaManualmente() {
         String texto = lerTexto();
         String classificacao = lerClassificacao();
 
         try {
-            adicionarNoticia(texto, validarString(classificacao) ? classificacao : null);
+            servico.adicionarNoticia(texto, classificacao.isBlank() ? null : classificacao);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public void adicionarNoticiaAutomaticamente(Scanner sc) {
+    /**
+     * Solicita texto ao usuário e classifica a notícia automaticamente pelo serviço.
+     */
+    public void adicionarNoticiaAutomaticamente() {
         String texto = lerTexto();
-        Classificacao classificacao = classificarNoticia(texto);
-        adicionarNoticia(texto, classificacao.name());
-    }
-
-    public void listarNoticias() {
-        if (listaNoticias.isEmpty()) {
-            System.out.println("Nenhuma notícia cadastrada.");
-            return;
-        }
-        for (Noticia noticia : listaNoticias) {
-            System.out.println(noticia);
-            System.out.println("\n--------------------");
-        }
+        Classificacao classificacao = servico.classificarNoticia(texto);
+        servico.adicionarNoticia(texto, classificacao.name());
     }
 
     private void exibirOpcoes() {
@@ -132,19 +53,22 @@ public class Sistema {
 
     private boolean processarOpcao(String operacao) {
         if (operacao.equals("1")) {
-            adicionarNoticiaManualmente(sc);
+            adicionarNoticiaManualmente();
         } else if (operacao.equals("2")) {
-            adicionarNoticiaAutomaticamente(sc);
+            adicionarNoticiaAutomaticamente();
         } else if (operacao.equals("3")) {
-            listarNoticias();
+            servico.listarNoticias();
         } else if (operacao.equals("4")) {
             return false;
         } else {
-            System.out.println("errado");
+            System.out.println("Opcao invalida.");
         }
         return true;
     }
 
+    /**
+     * Exibe o menu principal e processa as operações até o usuário escolher sair.
+     */
     public void exibirMenu() {
         boolean continuar = true;
         while (continuar) {
